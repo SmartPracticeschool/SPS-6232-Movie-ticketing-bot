@@ -1,0 +1,586 @@
+{
+  "intents": [
+    {
+      "intent": "Enquiry",
+      "examples": [
+        {
+          "text": "Tell me the names of movies being played"
+        },
+        {
+          "text": "Which are the available movies ?"
+        },
+        {
+          "text": "Which movies are being played at your theatre ?"
+        },
+        {
+          "text": "Which movie tickets are available ?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Greetings",
+      "examples": [
+        {
+          "text": "Good afternoon"
+        },
+        {
+          "text": "Good evening"
+        },
+        {
+          "text": "Good morning"
+        },
+        {
+          "text": "Hello"
+        },
+        {
+          "text": "Hi"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Show_timing_info",
+      "examples": [
+        {
+          "text": "At what time is the movie"
+        },
+        {
+          "text": "Please tell me the show timings"
+        },
+        {
+          "text": "What are the available show times ?"
+        },
+        {
+          "text": "What are the show timings for movies ?"
+        }
+      ],
+      "description": ""
+    }
+  ],
+  "entities": [
+    {
+      "entity": "Enquiry",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "available",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "movies",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "tickets",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "Greetings",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Good Afternoon",
+          "synonyms": [
+            "GA",
+            "Good afternoon",
+            "gud afternoon"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Good evening",
+          "synonyms": [
+            "GE",
+            "Good Evening",
+            "gud evening"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Good morning",
+          "synonyms": [
+            "gm",
+            "Good Morning",
+            "gud morning"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Hello",
+          "synonyms": [
+            "hey",
+            "Hi"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Hi",
+          "synonyms": [
+            "Hello",
+            "hey"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "Show_time_info",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "12 pm",
+          "synonyms": [
+            "12:00 - 3:00 pm",
+            "12.00 - 3.00 pm",
+            "afternoon show"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "3 pm",
+          "synonyms": [
+            "3:00 - 6:00 pm",
+            "3:00 pm to 6:00 pm",
+            "afternoon show"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "6 pm",
+          "synonyms": [
+            "6:00 - 9:00 pm",
+            "6.00 - 9 pm",
+            "6 to 9 pm",
+            "evening show"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "9 am",
+          "synonyms": [
+            "9:00 - 12:00 pm",
+            "9 to 12 pm",
+            "morning show time"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-date",
+      "values": [],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-number",
+      "values": [],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-time",
+      "values": [],
+      "fuzzy_match": true
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    }
+  },
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Anything else",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I didn't understand. You can try rephrasing."
+              },
+              {
+                "text": "Can you reword your statement? I'm not understanding."
+              },
+              {
+                "text": "I didn't get your meaning."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "Anything else",
+      "previous_sibling": "node_7_1602410582811",
+      "disambiguation_opt_out": true
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_4_1602413750901",
+      "context": {
+        "Show_time_info__9": "@Show_time_info:(9 am)"
+      },
+      "conditions": "@Show_time_info:(9 am)",
+      "event_name": "input",
+      "dialog_node": "handler_10_1602413750939"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "title": "",
+            "options": [
+              {
+                "label": "Tickets are available . Do you want to book ?",
+                "value": {
+                  "input": {
+                    "text": "Yes"
+                  }
+                }
+              },
+              {
+                "label": "",
+                "value": {
+                  "input": {
+                    "text": "No"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "slot_4_1602413750901",
+      "event_name": "focus",
+      "dialog_node": "handler_2_1602413750939",
+      "previous_sibling": "handler_10_1602413750939"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_4_1602413817868",
+      "context": {
+        "Show_time_info__3": "@Show_time_info:(3 pm)"
+      },
+      "conditions": "@Show_time_info:(3 pm)",
+      "event_name": "input",
+      "dialog_node": "handler_8_1602413817875"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_4_1602413817868",
+      "event_name": "focus",
+      "dialog_node": "handler_9_1602413817875",
+      "previous_sibling": "handler_8_1602413817875"
+    },
+    {
+      "type": "frame",
+      "title": "Show_time_info",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#Show_timing_info || @Show_time_info",
+      "dialog_node": "node_7_1602410582811",
+      "previous_sibling": "node_8_1602329136940"
+    },
+    {
+      "type": "standard",
+      "title": "Greetings",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#Greetings || @Greetings",
+      "dialog_node": "node_8_1602323036325",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "type": "standard",
+      "title": "Enquiry",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#Enquiry || @Enquiry",
+      "dialog_node": "node_8_1602329136940",
+      "previous_sibling": "node_8_1602323036325"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "title": "",
+            "options": [],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "node_7_1602410582811",
+      "dialog_node": "response_10_1602413656982",
+      "previous_sibling": "slot_4_1602413817868"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Good Evening"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_8_1602323036325",
+      "conditions": "@Greetings:(Good evening)",
+      "dialog_node": "response_1_1602323609886",
+      "previous_sibling": "response_7_1602323591304"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hi"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_8_1602323036325",
+      "conditions": "@Greetings:Hi",
+      "dialog_node": "response_4_1602323504175"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "DDLJ"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Dil to Pagal Hai"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Jab Tak Hai Jaan"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_8_1602329136940",
+      "conditions": "@Enquiry:movies",
+      "dialog_node": "response_4_1602329188033"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Good Afternoon"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_8_1602323036325",
+      "conditions": "@Greetings:(Good Afternoon)",
+      "dialog_node": "response_6_1602323568676",
+      "previous_sibling": "response_8_1602323540594"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Good Morning"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_8_1602323036325",
+      "conditions": "@Greetings:(Good morning)",
+      "dialog_node": "response_7_1602323591304",
+      "previous_sibling": "response_6_1602323568676"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hello"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_8_1602323036325",
+      "conditions": "@Greetings:Hello",
+      "dialog_node": "response_8_1602323540594",
+      "previous_sibling": "response_4_1602323504175"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": ""
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "DDLJ"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Jab Tak Hai Jaan"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Dil To Pagal Hai"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_8_1602329136940",
+      "conditions": "@Enquiry:tickets",
+      "dialog_node": "response_8_1602412423863",
+      "previous_sibling": "response_4_1602329188033"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_7_1602410582811",
+      "variable": "$Show_time_info__9",
+      "dialog_node": "slot_4_1602413750901"
+    },
+    {
+      "type": "slot",
+      "parent": "node_7_1602410582811",
+      "variable": "$Show_time_info__3",
+      "dialog_node": "slot_4_1602413817868",
+      "previous_sibling": "slot_4_1602413750901"
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hello. I'm a movie ticketing bot . I can \n1) Give the list of movies available , \n2) show the different show timings , \n3) show the availability of tickets and tell their respective price\n4) book the ticket\nHow can I help you ???"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "Welcome"
+    }
+  ],
+  "counterexamples": [],
+  "system_settings": {
+    "off_topic": {
+      "enabled": true
+    },
+    "disambiguation": {
+      "prompt": "Did you mean:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "None of the above"
+    },
+    "system_entities": {
+      "enabled": true
+    },
+    "human_agent_assist": {
+      "prompt": "Did you mean:"
+    },
+    "spelling_auto_correct": true
+  },
+  "learning_opt_out": false,
+  "name": "My first skill",
+  "language": "en",
+  "description": ""
+}
